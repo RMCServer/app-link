@@ -73,8 +73,14 @@
                     </label>
                     <input type="text" id="title-input" name="title" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
                 </div>
+                <!-- Title Input (Auto-filled) -->
+                <div class="flex flex-col gap-2">
+                    <label for="file_path" class="text-xs font-bold text-dark-muted uppercase tracking-wider flex justify-between">
+                        <span>Embed</span>
+                    </label>
+                    <input type="text" id="file_path" name="file_path" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
+                </div>
 
-                <!-- Category Picker -->
                 <!-- Category Picker -->
                 <div class="flex flex-col gap-2">
                     <label class="text-xs font-bold text-dark-muted uppercase tracking-wider flex justify-between">

@@ -12,7 +12,10 @@
     $url = $item->final_url ?? $item->source_url;
     $host = $url ? parse_url($url, PHP_URL_HOST) : null;
 
-    $image = $item->image_url ?? ($item->file_path ? asset('storage/' . $item->file_path) : null);
+    $embedHtml = $item->file_path;
+    $hasEmbed = filled($embedHtml) && str_contains($embedHtml, '<iframe');
+
+    $image = $item->image_url;
 
     $isVideo = $item->type === 'video';
     $isImage = $item->type === 'image';
@@ -53,51 +56,59 @@
         <section id="media-preview" class="bg-dark-surface rounded-[16px] border border-dark-border overflow-hidden relative shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
             <div class="absolute top-0 left-0 w-full h-1 bg-brand-crimson z-10"></div>
 
-            <a
-                href="{{ $url ?? route('show', $item) }}"
-                @if($url) target="_blank" rel="noopener noreferrer" @endif
-                class="relative w-full aspect-video bg-black group flex items-center justify-center"
-            >
-                @if ($image)
-                    <img
-                        class="w-full h-full object-cover opacity-80 transition-opacity group-hover:opacity-60"
-                        src="{{ $image }}"
-                        alt="{{ $title }}"
-                    >
-                @elseif ($item->favicon_url && $isLink)
-                    <div class="w-full h-full bg-[#2A2B2E] flex items-center justify-center">
-                        <img src="{{ $item->favicon_url }}" alt="" class="w-20 h-20 rounded">
+            @if ($hasEmbed)
+                <div class="relative w-full aspect-video bg-black overflow-hidden">
+                    <div class="w-full h-full [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:absolute [&_iframe]:inset-0">
+                        {!! $embedHtml !!}
                     </div>
-                @else
-                    <div class="w-full h-full bg-[#2A2B2E] flex flex-col items-center justify-center gap-3">
-                        <i class="{{ $typeConfig['fallbackIcon'] }} text-5xl text-brand-crimson"></i>
-                        <span class="text-sm text-dark-muted">{{ $typeConfig['fallbackText'] }}</span>
-                    </div>
-                @endif
-
-                <div class="absolute inset-0 bg-gradient-to-t from-dark-surface/90 via-transparent to-transparent"></div>
-
-                @if ($isVideo)
-                    <div class="absolute w-14 h-14 rounded-full bg-brand-crimson/90 text-white flex items-center justify-center shadow-[0_0_20px_rgba(220,20,60,0.5)] group-hover:bg-brand-crimson group-hover:scale-110 transition-all z-20">
-                        <i class="fa-solid fa-play text-xl ml-1"></i>
-                    </div>
-
-                    @if (!empty($item->metadata['duration']))
-                        <div class="absolute bottom-3 right-3 bg-black/80 px-2 py-0.5 rounded text-xs font-medium border border-dark-border/50 z-20">
-                            {{ $item->metadata['duration'] }}
+                </div>
+            @else
+                <a
+                    href="{{ $url ?? route('show', $item) }}"
+                    @if($url) target="_blank" rel="noopener noreferrer" @endif
+                    class="relative w-full aspect-video bg-black group flex items-center justify-center"
+                >
+                    @if ($image)
+                        <img
+                            class="w-full h-full object-cover opacity-80 transition-opacity group-hover:opacity-60"
+                            src="{{ $image }}"
+                            alt="{{ $title }}"
+                        >
+                    @elseif ($item->favicon_url && $isLink)
+                        <div class="w-full h-full bg-[#2A2B2E] flex items-center justify-center">
+                            <img src="{{ $item->favicon_url }}" alt="" class="w-20 h-20 rounded">
+                        </div>
+                    @else
+                        <div class="w-full h-full bg-[#2A2B2E] flex flex-col items-center justify-center gap-3">
+                            <i class="{{ $typeConfig['fallbackIcon'] }} text-5xl text-brand-crimson"></i>
+                            <span class="text-sm text-dark-muted">{{ $typeConfig['fallbackText'] }}</span>
                         </div>
                     @endif
-                @endif
 
-                @if ($url)
-                    <div class="absolute top-3 right-3 bg-dark-bg/80 backdrop-blur-sm border border-dark-border rounded-[8px] px-2 py-1 flex items-center gap-1.5 z-20">
-                        <i class="{{ $typeConfig['sourceIcon'] }} {{ $typeConfig['sourceColor'] }} text-xs"></i>
-                        <span class="text-[10px] font-bold text-white uppercase tracking-wider">
-                            {{ $item->provider_name ?? $item->site_name ?? $host ?? $typeConfig['label'] }}
-                        </span>
-                    </div>
-                @endif
-            </a>
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-surface/90 via-transparent to-transparent"></div>
+
+                    @if ($isVideo)
+                        <div class="absolute w-14 h-14 rounded-full bg-brand-crimson/90 text-white flex items-center justify-center shadow-[0_0_20px_rgba(220,20,60,0.5)] group-hover:bg-brand-crimson group-hover:scale-110 transition-all z-20">
+                            <i class="fa-solid fa-play text-xl ml-1"></i>
+                        </div>
+
+                        @if (!empty($item->metadata['duration']))
+                            <div class="absolute bottom-3 right-3 bg-black/80 px-2 py-0.5 rounded text-xs font-medium border border-dark-border/50 z-20">
+                                {{ $item->metadata['duration'] }}
+                            </div>
+                        @endif
+                    @endif
+
+                    @if ($url)
+                        <div class="absolute top-3 right-3 bg-dark-bg/80 backdrop-blur-sm border border-dark-border rounded-[8px] px-2 py-1 flex items-center gap-1.5 z-20">
+                            <i class="{{ $typeConfig['sourceIcon'] }} {{ $typeConfig['sourceColor'] }} text-xs"></i>
+                            <span class="text-[10px] font-bold text-white uppercase tracking-wider">
+                                {{ $item->provider_name ?? $item->site_name ?? $host ?? $typeConfig['label'] }}
+                            </span>
+                        </div>
+                    @endif
+                </a>
+            @endif
         </section>
 
         {{-- Metadata & Quick Actions --}}
