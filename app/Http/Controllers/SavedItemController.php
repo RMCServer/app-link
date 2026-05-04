@@ -80,7 +80,7 @@ class SavedItemController extends Controller
         $validated['is_favorite'] = $request->boolean('is_favorite');
         $validated['is_archived'] = $request->boolean('is_archived');
 
-//         dd($validated);
+        dd($validated);
         SavedItem::create($validated);
 
         return redirect()
