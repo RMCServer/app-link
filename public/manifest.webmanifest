@@ -1,6 +1,6 @@
 {
-    "name": "Saved Items",
-    "short_name": "Saved",
+    "name": "Bookmarkr",
+    "short_name": "Bookmarkr",
     "description": "Save links, videos and images.",
     "start_url": "/saved-items",
     "scope": "/",

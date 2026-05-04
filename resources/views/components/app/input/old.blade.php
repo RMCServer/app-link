@@ -39,7 +39,7 @@
                     <label for="source_url" class="text-xs font-bold text-dark-muted uppercase tracking-wider">Paste URL</label>
                     <div class="relative">
                         <i class="fa-solid fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-dark-muted"></i>
-                        <input required type="url" name="source_url" id="source_url" placeholder="https://example.com/article" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3.5 pl-11 pr-4 text-sm text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
+                        <input required type="url" name="source_url" id="source_url" placeholder="https://example.com/article" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3.5 pl-11 pr-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
 
                         <!-- Auto-extracting loader indicator (simulated) -->
                         <div class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-brand-crimson border-t-transparent rounded-full animate-spin hidden"></div>
@@ -71,7 +71,7 @@
                     <label for="title-input" class="text-xs font-bold text-dark-muted uppercase tracking-wider flex justify-between">
                         <span>Title</span>
                     </label>
-                    <input type="text" id="title-input" name="title" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-sm text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
+                    <input type="text" id="title-input" name="title" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
                 </div>
 
                 <!-- Category Picker -->
