@@ -26,6 +26,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('saved-items/store', [SavedItemController::class, 'store'])->name('saved-items.store');
     Route::get('/saved-items/{savedItem}', [SavedItemController::class, 'show'])
             ->name('show');
+    Route::get('/saved-items/{savedItem}/edit', [SavedItemController::class, 'edit'])
+                ->name('edit');
+    Route::put('/saved-items/{savedItem}/update', [SavedItemController::class, 'update'])
+                    ->name('update');
 
     Route::delete('/saved-items/{savedItem}', [SavedItemController::class, 'delete'])
         ->name('delete');

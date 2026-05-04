@@ -6,7 +6,7 @@
         <div class="flex items-center gap-3 w-full">
             <div class="relative w-full flex items-center">
                 <i class="fa-solid fa-search absolute left-3 text-dark-muted"></i>
-                <input type="search" name="q" value="{{ request('q') }}" class="w-full bg-dark-surface border border-brand-crimson rounded-full py-2 pl-10 pr-10 text-sm text-white focus:outline-none focus:ring-1 focus:ring-brand-crimson placeholder-dark-muted" placeholder="Search saved items...">
+                <input type="search" name="q" value="{{ request('q') }}" class="w-full bg-dark-surface border border-brand-crimson rounded-full py-2 pl-10 pr-10 text-white focus:outline-none focus:ring-1 focus:ring-brand-crimson placeholder-dark-muted" placeholder="Search saved items...">
                 <a href="{{ route('search.index') }}" class="absolute right-3 text-dark-muted hover:text-white transition-colors">
                     <i class="fa-solid fa-xmark"></i>
                 </a>

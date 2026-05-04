@@ -105,7 +105,7 @@ class SavedItemController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('saved-items.edit', [
+        return view('pages.items.edit', [
             'item' => $savedItem,
             'categories' => $categories,
             'account' => $account,
@@ -117,7 +117,7 @@ class SavedItemController extends Controller
         $this->authorizeAccountAccess($savedItem);
 
         $account = $this->activeAccount();
-
+        $request->type = $savedItem->type;
         $validated = $this->validateSavedItem($request, $account->id);
 
         $validated['is_favorite'] = $request->boolean('is_favorite');

@@ -46,13 +46,6 @@
 @endphp
 
 <div class="group bg-dark-surface rounded-[12px] border border-dark-border overflow-hidden shadow-soft hover:border-brand-crimson transition-all duration-300 relative flex flex-col">
-    <div class="absolute top-3 right-3 z-20 transition-opacity">
-        <a href="{{ $showUrl }}"
-           class="w-8 h-8 rounded-full bg-dark-bg/80 backdrop-blur text-dark-text hover:text-brand-crimson flex items-center justify-center border border-dark-border">
-            <i class="fa-solid fa-eye"></i>
-        </a>
-    </div>
-
     @if ($hasEmbed)
         <div class="{{ $typeConfig['height'] }} bg-black relative overflow-hidden border-b border-dark-border/50">
             <div class="w-full h-full [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:absolute [&_iframe]:inset-0">
@@ -89,21 +82,26 @@
             @endif
         </a>
     @endif
+    <div class="flex">
+        <a href="{{ $openUrl }}"
+           @if($item->type === 'video') target="_blank" rel="noopener noreferrer" @endif
+           class="p-4 flex flex-col gap-2 flex-1">
+            <div class="flex items-center gap-2 text-xs text-brand-crimson font-medium">
+                <i class="{{ $typeConfig['icon'] }}"></i>
+                <span>{{ $categoryName }}</span>
+            </div>
 
-    <a href="{{ $openUrl }}"
-       @if($item->type === 'video') target="_blank" rel="noopener noreferrer" @endif
-       class="p-4 flex flex-col gap-2 flex-1">
-        <div class="flex items-center gap-2 text-xs text-brand-crimson font-medium">
-            <i class="{{ $typeConfig['icon'] }}"></i>
-            <span>{{ $categoryName }}</span>
-        </div>
+            <h3 class="text-base font-bold text-white {{ $typeConfig['titleClamp'] }} leading-tight">
+                {{ $title }}
+            </h3>
 
-        <h3 class="text-base font-bold text-white {{ $typeConfig['titleClamp'] }} leading-tight">
-            {{ $title }}
-        </h3>
-
-        <p class="text-sm text-dark-muted line-clamp-1 mt-auto">
-            {{ $typeConfig['meta'] }}
-        </p>
-    </a>
+            <p class="text-sm text-dark-muted line-clamp-1 mt-auto">
+                {{ $typeConfig['meta'] }}
+            </p>
+        </a>
+        <a href="{{ $showUrl }}"
+                   class="m-4 w-8 h-8 rounded-full bg-dark-bg/80 backdrop-blur text-dark-text hover:text-brand-crimson flex items-center justify-center border border-dark-border">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+    </div>
 </div>

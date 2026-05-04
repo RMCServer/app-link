@@ -158,7 +158,7 @@
             {{-- Action Buttons --}}
             <div class="grid grid-cols-3 gap-3 mt-2">
                 <a
-                    href="{{ route('show', $item) }}"
+                    href="{{ route('edit', $item) }}"
                     class="flex flex-col items-center justify-center gap-1.5 py-3 rounded-[12px] bg-dark-surface border border-dark-border text-white hover:border-brand-crimson hover:text-brand-crimson transition-colors"
                 >
                     <i class="fa-solid fa-pen-to-square"></i>
@@ -197,7 +197,7 @@
                     Notes
                 </h3>
 
-                <a href="{{ route('show', $item) }}" class="text-brand-crimson text-xs font-bold hover:underline">
+                <a href="{{ route('edit', $item) }}" class="text-brand-crimson text-xs font-bold hover:underline">
                     Edit Notes
                 </a>
             </div>
