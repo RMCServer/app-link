@@ -5,6 +5,7 @@ use App\Http\Controllers\SavedItemController;
 use App\Http\Controllers\AccountSwitchController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SearchController;
 
 Route::view('/', 'welcome')->name('home');
 
@@ -54,6 +55,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/logout', [SettingsController::class, 'logout'])
         ->name('logout');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/search', [SearchController::class, 'index'])
+        ->name('search.index');
 });
 
 require __DIR__.'/settings.php';
