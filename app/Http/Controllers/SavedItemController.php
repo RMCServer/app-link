@@ -68,11 +68,7 @@ class SavedItemController extends Controller
         if (! empty($validated['source_url'])) {
             $metadata = $metadataService->fetch($validated['source_url']);
 
-            dump($metadata);
-
             $validated = $metadataService->merge($validated, $metadata);
-
-            dump($validated);
         }
 
         $validated['account_id'] = $account->id;
@@ -80,7 +76,6 @@ class SavedItemController extends Controller
         $validated['is_favorite'] = $request->boolean('is_favorite');
         $validated['is_archived'] = $request->boolean('is_archived');
 
-        dd($validated);
         SavedItem::create($validated);
 
         return redirect()

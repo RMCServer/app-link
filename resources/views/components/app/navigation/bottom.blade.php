@@ -38,7 +38,7 @@
        @endisset
    </div>
 
-    <a href="{{ route('index') }}"
+    <a href="{{ route('search.index') }}"
        class="{{ $navLink }} {{ request()->routeIs('search.*') ? $active : $inactive }}">
         <i class="fa-solid fa-search text-lg group-hover:-translate-y-1 transition-transform"></i>
         <span class="text-[10px] font-medium">Search</span>
