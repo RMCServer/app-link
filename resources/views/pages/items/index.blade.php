@@ -1,3 +1,4 @@
+<x-app.layout.userlayout />
 <!DOCTYPE html>
 <html lang="en">
 <head>
