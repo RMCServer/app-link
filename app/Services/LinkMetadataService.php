@@ -159,6 +159,13 @@ class LinkMetadataService
                 ->connectTimeout(5)
                 ->retry(2, 500)
                 ->get($url);
+            logger()->info('OpenGraph response', [
+                'url' => $url,
+                'status' => $response->status(),
+                'final_url' => (string) $response->effectiveUri(),
+                'content_type' => $response->header('content-type'),
+                'body_start' => substr($response->body(), 0, 1000),
+            ]);
 
             if (! $response->successful()) {
                 return null;

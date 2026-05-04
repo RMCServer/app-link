@@ -80,7 +80,7 @@
                     <label class="text-xs font-bold text-dark-muted uppercase tracking-wider flex justify-between">
                         <span>Save to Category</span>
 
-                        <a href="{{ route('index') }}"
+                        <a href="{{ route('categories.index') }}"
                            class="text-brand-crimson hover:text-white transition-colors">
                             <i class="fa-solid fa-plus text-[10px] mr-1"></i>
                             New
