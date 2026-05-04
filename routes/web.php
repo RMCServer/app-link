@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SavedItemController;
 use App\Http\Controllers\AccountSwitchController;
+use App\Http\Controllers\CategoryController;
 
 Route::view('/', 'welcome')->name('home');
 
@@ -24,7 +25,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/saved-items/{savedItem}', [SavedItemController::class, 'show'])
             ->name('show');
 
-    Route::delete('saved-items', [SavedItemController::class, 'delete'])->name('delete');
+    Route::delete('/saved-items/{savedItem}', [SavedItemController::class, 'delete'])
+        ->name('delete');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('categories', CategoryController::class);
 });
 
 Route::middleware(['auth'])->group(function () {

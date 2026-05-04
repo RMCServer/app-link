@@ -17,17 +17,30 @@ class SavedItemController extends Controller
         $account = $this->activeAccount();
 
         $type = $request->query('type');
+        $categoryId = $request->query('category');
+
+        $categories = $account->categories()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
 
         $items = $account->savedItems()
             ->with('category')
             ->when(in_array($type, ['link', 'video', 'image']), function ($query) use ($type) {
                 $query->where('type', $type);
             })
+            ->when($categoryId, function ($query) use ($categoryId, $account) {
+                $query->whereHas('category', function ($query) use ($categoryId, $account) {
+                    $query
+                        ->where('id', $categoryId)
+                        ->where('account_id', $account->id);
+                });
+            })
             ->latest()
             ->paginate(20)
             ->withQueryString();
 
-        return view('pages.items.index', compact('items', 'account', 'type'));
+        return view('pages.items.index', compact('items', 'account', 'type', 'categories', 'categoryId'));
     }
 
     public function create()

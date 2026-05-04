@@ -11,7 +11,7 @@
         <span class="text-[10px] font-medium">Saved</span>
     </a>
 
-    <a href="{{ route('index') }}"
+    <a href="{{ route('categories.index') }}"
        class="{{ $navLink }} {{ request()->routeIs('categories.*') ? $active : $inactive }}">
         <i class="fa-solid fa-folder text-lg group-hover:-translate-y-1 transition-transform"></i>
         <span class="text-[10px] font-medium">Categories</span>
@@ -29,7 +29,7 @@
            <a
                href="{{ route('create') }}"
                class="w-14 h-14 rounded-full flex items-center justify-center border-4 border-dark-bg transform scale-105 ring-2 ring-offset-2 ring-offset-dark-bg
-                      {{ request()->routeIs('index', 'saved-items.create')
+                      {{ request()->routeIs('saved-items.create')
                            ? 'bg-brand-crimson text-white shadow-[0_8px_20px_rgba(220,20,60,0.6)] ring-brand-crimson/50'
                            : 'bg-dark-surface text-dark-muted hover:bg-brand-crimson hover:text-white ring-dark-border/50' }}"
            >

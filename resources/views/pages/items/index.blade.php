@@ -115,7 +115,21 @@
                     Photos
                 </a>
 
-                <a href="{{ route('index') }}"
+                @foreach ($categories as $category)
+                    <a href="{{ route('index', array_filter([
+                            'type' => request('type'),
+                            'category' => $category->id,
+                        ])) }}"
+                       class="snap-start whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium transition-colors
+                              {{ (int) request('category') === $category->id
+                                    ? 'bg-brand-crimson text-white border-brand-crimson shadow-soft'
+                                    : 'bg-dark-surface text-dark-text hover:text-white border-dark-border hover:border-brand-crimson' }}">
+                        <i class="fa-solid fa-folder mr-1.5 {{ (int) request('category') === $category->id ? 'text-white' : 'text-brand-crimson' }}"></i>
+                        {{ $category->name }}
+                    </a>
+                @endforeach
+
+                <a href="{{ route('categories.index') }}"
                    class="snap-start whitespace-nowrap px-3 py-2 rounded-full bg-transparent text-dark-muted hover:text-brand-crimson border border-dashed border-dark-border hover:border-brand-crimson transition-colors text-sm font-medium ml-2 flex items-center">
                     <i class="fa-solid fa-plus mr-1.5"></i>
                     New Folder
@@ -139,6 +153,7 @@
             <i class="fa-solid fa-plus"></i>
         </a>
     </main>
+    <x-app.navigation.bottom />
 
 </body>
 </html>
