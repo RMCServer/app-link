@@ -271,6 +271,81 @@ class SavedItemController extends Controller
         }
     }
 
+//     private function redditMetadata(string $url): ?array
+//     {
+//         $host = parse_url($url, PHP_URL_HOST);
+//
+//         $isReddit = $host && str_contains($host, 'reddit.com');
+//
+//         if (! $isReddit) {
+//             return null;
+//         }
+//
+//         $jsonUrl = rtrim($url, '/') . '.json';
+//
+//         try {
+//             $response = Http::withHeaders([
+//                 'User-Agent' => 'Bookmarkr/1.0',
+//                 'Accept' => 'application/json',
+//             ])
+//                 ->timeout(10)
+//                 ->connectTimeout(5)
+//                 ->get($jsonUrl);
+//
+//             if (! $response->successful()) {
+//                 return null;
+//             }
+//
+//             $json = $response->json();
+//
+//             $post = $json[0]['data']['children'][0]['data'] ?? null;
+//
+//             if (! $post) {
+//                 return null;
+//             }
+//
+//             $image = null;
+//
+//             if (! empty($post['preview']['images'][0]['source']['url'])) {
+//                 $image = html_entity_decode($post['preview']['images'][0]['source']['url']);
+//             } elseif (! empty($post['thumbnail']) && str_starts_with($post['thumbnail'], 'http')) {
+//                 $image = $post['thumbnail'];
+//             }
+//
+//             return [
+//                 'type' => ! empty($post['is_video']) ? 'video' : 'link',
+//                 'title' => $post['title'] ?? null,
+//                 'description' => ! empty($post['selftext'])
+//                     ? substr($post['selftext'], 0, 500)
+//                     : null,
+//                 'image_url' => $image,
+//                 'site_name' => 'Reddit',
+//                 'provider_name' => 'Reddit',
+//                 'final_url' => ! empty($post['permalink'])
+//                     ? 'https://www.reddit.com' . $post['permalink']
+//                     : $url,
+//                 'favicon_url' => 'https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png',
+//                 'metadata' => [
+//                     'provider' => 'reddit',
+//                     'subreddit' => $post['subreddit'] ?? null,
+//                     'author' => $post['author'] ?? null,
+//                     'score' => $post['score'] ?? null,
+//                     'num_comments' => $post['num_comments'] ?? null,
+//                     'permalink' => $post['permalink'] ?? null,
+//                     'reddit_url' => $post['url'] ?? null,
+//                     'is_video' => $post['is_video'] ?? false,
+//                 ],
+//                 'fetched_at' => now(),
+//             ];
+//         } catch (\Throwable $e) {
+//             \Log::error('Reddit metadata failed', [
+//                 'url' => $url,
+//                 'error' => $e->getMessage(),
+//             ]);
+//
+//             return null;
+//         }
+//     }
     private function redditMetadata(string $url): ?array
     {
         $host = parse_url($url, PHP_URL_HOST);
@@ -281,72 +356,54 @@ class SavedItemController extends Controller
             return null;
         }
 
-        $jsonUrl = rtrim($url, '/') . '.json';
+        $path = parse_url($url, PHP_URL_PATH);
 
-        try {
-            $response = Http::withHeaders([
-                'User-Agent' => 'Bookmarkr/1.0',
-                'Accept' => 'application/json',
-            ])
-                ->timeout(10)
-                ->connectTimeout(5)
-                ->get($jsonUrl);
+        $title = 'Reddit post';
+        $subreddit = null;
+        $postId = null;
 
-            if (! $response->successful()) {
-                return null;
+        if ($path) {
+            $parts = array_values(array_filter(explode('/', $path)));
+
+            // Example:
+            // r/forbiddensnacks/comments/1t2z242/forbidden_giant_cake
+            $rIndex = array_search('r', $parts);
+            $commentsIndex = array_search('comments', $parts);
+
+            if ($rIndex !== false && isset($parts[$rIndex + 1])) {
+                $subreddit = $parts[$rIndex + 1];
             }
 
-            $json = $response->json();
-
-            $post = $json[0]['data']['children'][0]['data'] ?? null;
-
-            if (! $post) {
-                return null;
+            if ($commentsIndex !== false && isset($parts[$commentsIndex + 1])) {
+                $postId = $parts[$commentsIndex + 1];
             }
 
-            $image = null;
+            if ($commentsIndex !== false && isset($parts[$commentsIndex + 2])) {
+                $slug = $parts[$commentsIndex + 2];
 
-            if (! empty($post['preview']['images'][0]['source']['url'])) {
-                $image = html_entity_decode($post['preview']['images'][0]['source']['url']);
-            } elseif (! empty($post['thumbnail']) && str_starts_with($post['thumbnail'], 'http')) {
-                $image = $post['thumbnail'];
+                $title = str_replace(['_', '-'], ' ', $slug);
+                $title = ucfirst($title);
             }
-
-            return [
-                'type' => ! empty($post['is_video']) ? 'video' : 'link',
-                'title' => $post['title'] ?? null,
-                'description' => ! empty($post['selftext'])
-                    ? substr($post['selftext'], 0, 500)
-                    : null,
-                'image_url' => $image,
-                'site_name' => 'Reddit',
-                'provider_name' => 'Reddit',
-                'final_url' => ! empty($post['permalink'])
-                    ? 'https://www.reddit.com' . $post['permalink']
-                    : $url,
-                'favicon_url' => 'https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png',
-                'metadata' => [
-                    'provider' => 'reddit',
-                    'subreddit' => $post['subreddit'] ?? null,
-                    'author' => $post['author'] ?? null,
-                    'score' => $post['score'] ?? null,
-                    'num_comments' => $post['num_comments'] ?? null,
-                    'permalink' => $post['permalink'] ?? null,
-                    'reddit_url' => $post['url'] ?? null,
-                    'is_video' => $post['is_video'] ?? false,
-                ],
-                'fetched_at' => now(),
-            ];
-        } catch (\Throwable $e) {
-            \Log::error('Reddit metadata failed', [
-                'url' => $url,
-                'error' => $e->getMessage(),
-            ]);
-
-            return null;
         }
-    }
 
+        return [
+            'type' => 'link',
+            'title' => $title,
+            'description' => $subreddit ? 'r/' . $subreddit : null,
+            'image_url' => null,
+            'site_name' => 'Reddit',
+            'provider_name' => 'Reddit',
+            'final_url' => $url,
+            'favicon_url' => 'https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png',
+            'metadata' => [
+                'provider' => 'reddit',
+                'blocked' => true,
+                'subreddit' => $subreddit,
+                'post_id' => $postId,
+            ],
+            'fetched_at' => now(),
+        ];
+    }
     private function openGraphMetadata(string $url): ?array
     {
         try {
