@@ -1,11 +1,8 @@
 @props(['item', 'query' => null])
 @php
 
-
-    $type = $item->item_type;
-
     $title = $item->title ?? $item->name ?? 'Untitled';
-    $type = $item->type ?? $item->result_type ?? 'link';
+    $type = $item->item_type ?? $item->result_type ?? 'link';
     $categoryName = $item->category?->name ?? $item->category_name ?? null;
     $url = isset($item->id) ? route('show', $item->id) : '#';
 
