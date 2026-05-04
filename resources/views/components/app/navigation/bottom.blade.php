@@ -44,7 +44,7 @@
         <span class="text-[10px] font-medium">Search</span>
     </a>
 
-    <a href="{{ route('index') }}"
+    <a href="{{ route('settings.index') }}"
        class="{{ $navLink }} {{ request()->routeIs('settings.*') ? $active : $inactive }}">
         <i class="fa-solid fa-gear text-lg group-hover:-translate-y-1 transition-transform"></i>
         <span class="text-[10px] font-medium">Settings</span>

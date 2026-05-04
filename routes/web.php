@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SavedItemController;
 use App\Http\Controllers\AccountSwitchController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SettingsController;
 
 Route::view('/', 'welcome')->name('home');
 
@@ -39,6 +40,20 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/accounts/{account}/switch', [AccountSwitchController::class, 'switch'])
         ->name('accounts.switch');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/settings', [SettingsController::class, 'index'])
+        ->name('settings.index');
+
+    Route::delete('/settings/saved-data', [SettingsController::class, 'deleteSavedData'])
+        ->name('settings.saved-data.delete');
+
+    Route::delete('/settings/account', [SettingsController::class, 'deleteAccount'])
+        ->name('settings.account.delete');
+
+    Route::post('/logout', [SettingsController::class, 'logout'])
+        ->name('logout');
 });
 
 require __DIR__.'/settings.php';

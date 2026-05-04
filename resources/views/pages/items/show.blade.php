@@ -71,30 +71,7 @@
 <body class="bg-dark-bg min-h-screen flex flex-col m-0 p-0 overflow-x-hidden antialiased selection:bg-brand-crimson selection:text-white w-full md:max-w-[375px] md:mx-auto md:border-x md:border-dark-border relative">
 
     <!-- Top Navigation Bar (VERBATIM FROM PRIOR) -->
-    <header id="header" class="sticky top-0 z-50 bg-dark-bg/95 backdrop-blur-md border-b border-dark-border px-5 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <a href="{{ route('index') }}" class="text-dark-text hover:text-brand-crimson transition-colors">
-                <i class="fa-solid fa-arrow-left text-xl"></i>
-            </a>
-            <h1 class="text-xl font-bold tracking-tight">Item Details</h1>
-        </div>
-
-        <div class="flex items-center gap-4">
-            <!-- Account Switcher -->
-            <div class="relative group cursor-pointer flex items-center gap-2 bg-dark-surface px-3 py-1.5 rounded-lg border border-dark-border hover:border-brand-crimson transition-colors">
-                <div class="w-6 h-6 rounded-full overflow-hidden bg-brand-crimson flex items-center justify-center text-xs font-bold">
-                    G
-                </div>
-                <span class="text-sm font-medium hidden sm:inline">Guest</span>
-                <i class="fa-solid fa-chevron-down text-xs text-dark-muted"></i>
-            </div>
-
-            <!-- Settings Icon -->
-            <button class="text-dark-text hover:text-brand-crimson transition-colors w-10 h-10 rounded-full flex items-center justify-center bg-dark-surface border border-dark-border">
-                <i class="fa-solid fa-gear"></i>
-            </button>
-        </div>
-    </header>
+    <x-app.navigation.top title="Saves" back="index" />
 
     <!-- Main Content Area -->
     <x-app.items.show :item="$item" :related-items="$relatedItems ?? collect()" />

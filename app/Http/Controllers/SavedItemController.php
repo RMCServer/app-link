@@ -55,6 +55,45 @@ class SavedItemController extends Controller
         return view('pages.items.create', compact('categories', 'account'));
     }
 
+    private function youtubeOembed(string $url): ?array
+    {
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (! $host || ! str_contains($host, 'youtube.com') && ! str_contains($host, 'youtu.be')) {
+            return null;
+        }
+
+        $response = Http::timeout(10)->get('https://www.youtube.com/oembed', [
+            'url' => $url,
+            'format' => 'json',
+        ]);
+
+        if (! $response->successful()) {
+            return null;
+        }
+
+        $data = $response->json();
+
+        return [
+            'type' => 'video',
+            'title' => $data['title'] ?? null,
+            'description' => null,
+            'image_url' => $data['thumbnail_url'] ?? null,
+            'site_name' => 'YouTube',
+            'provider_name' => $data['provider_name'] ?? 'YouTube',
+            'final_url' => $url,
+            'metadata' => [
+                'provider' => 'youtube',
+                'author_name' => $data['author_name'] ?? null,
+                'author_url' => $data['author_url'] ?? null,
+                'thumbnail_width' => $data['thumbnail_width'] ?? null,
+                'thumbnail_height' => $data['thumbnail_height'] ?? null,
+                'html' => $data['html'] ?? null,
+            ],
+            'fetched_at' => now(),
+        ];
+    }
+
     public function store(Request $request)
     {
         $account = $this->activeAccount();
@@ -81,6 +120,24 @@ class SavedItemController extends Controller
             'is_archived' => ['nullable', 'boolean'],
         ]);
         if (! empty($validated['source_url'])) {
+            $youtubeData = $this->youtubeOembed($validated['source_url']);
+
+            if ($youtubeData) {
+                foreach ($youtubeData as $key => $value) {
+                    if ($key === 'metadata') {
+                        $validated['metadata'] = array_merge(
+                            $validated['metadata'] ?? [],
+                            $value
+                        );
+
+                        continue;
+                    }
+
+                    if (! empty($value) && empty($validated[$key])) {
+                        $validated[$key] = $value;
+                    }
+                }
+            } else {
             $response = Http::timeout(5)->get($validated['source_url']);
 
             if ($response->successful()) {
@@ -168,7 +225,7 @@ class SavedItemController extends Controller
                     $validated['type'] = 'video';
                 }
             }
-        }
+        }}
 
         $validated['account_id'] = $account->id;
         $validated['created_by_user_id'] = auth()->id();
