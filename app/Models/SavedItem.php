@@ -98,7 +98,13 @@ class SavedItem extends Model
 
     public function getPreviewImageAttribute(): ?string
     {
-        return $this->image_url ?: $this->file_path;
+        if ($this->image_url) {
+            return $this->image_url;
+        }
+
+        return $this->file_path
+            ? route('saved-items.image', $this)
+            : null;
     }
 
     public function getUrlAttribute(): ?string

@@ -36,49 +36,67 @@
 
                 <!-- URL Input -->
                 <div class="flex flex-col gap-2">
-                    <label for="source_url" class="text-xs font-bold text-dark-muted uppercase tracking-wider">Paste URL</label>
+                    <label for="source_url" class="text-xs font-bold text-dark-muted uppercase tracking-wider">
+                        Paste URL
+                    </label>
+
                     <div class="relative">
                         <i class="fa-solid fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-dark-muted"></i>
-                        <input required type="url" name="source_url" id="source_url" placeholder="https://example.com/article" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3.5 pl-11 pr-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
 
-                        <!-- Auto-extracting loader indicator (simulated) -->
+                        <input
+                            type="url"
+                            name="source_url"
+                            id="source_url"
+                            placeholder="https://example.com/article"
+                            class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3.5 pl-11 pr-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors"
+                        >
+
                         <div class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-brand-crimson border-t-transparent rounded-full animate-spin hidden"></div>
                         <i class="fa-solid fa-check-circle absolute right-4 top-1/2 -translate-y-1/2 text-brand-crimson"></i>
                     </div>
                 </div>
 
-                {{--
-                <div id="metadata-preview" class="bg-dark-surface rounded-[12px] border border-dark-border overflow-hidden relative">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-brand-crimson"></div>
-                    <div class="h-24 w-full relative overflow-hidden bg-dark-bg border-b border-dark-border">
-                        <img class="w-full h-full object-cover opacity-60" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b13a5c8969-96ef83b1a853239ee90d.png" alt="Preview thumbnail" />
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-surface to-transparent opacity-50"></div>
-                        <div class="absolute bottom-2 left-3 flex items-center gap-2">
-                            <div class="w-5 h-5 rounded bg-dark-surface flex items-center justify-center p-0.5 border border-dark-border">
-                                <i class="fa-brands fa-dribbble text-[#EA4C89] text-[10px]"></i>
-                            </div>
-                            <span class="text-[10px] font-bold text-white uppercase tracking-wider drop-shadow-md">dribbble.com</span>
-                        </div>
-                    </div>
-                    <div class="p-3">
-                        <h4 class="text-sm font-bold text-white leading-tight line-clamp-1 mb-1">Modern Dark UI Kit - Dashboard Components</h4>
-                        <p class="text-xs text-dark-muted line-clamp-2">A comprehensive dark mode UI kit focusing on dashboard analytics, charts, and data visualization components.</p>
-                    </div>
+                <!-- Photo Upload -->
+                <div class="flex flex-col gap-2">
+                    <label for="photo" class="text-xs font-bold text-dark-muted uppercase tracking-wider">
+                        Upload Photo
+                    </label>
+
+                    <input
+                        type="file"
+                        id="photo"
+                        name="photo"
+                        accept="image/*"
+                        class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white file:mr-4 file:rounded-lg file:border-0 file:bg-brand-crimson file:px-4 file:py-2 file:text-white hover:file:opacity-90"
+                    >
                 </div>
-                --}}
-                <!-- Title Input (Auto-filled) -->
+
+                <!-- Title Input -->
                 <div class="flex flex-col gap-2">
                     <label for="title-input" class="text-xs font-bold text-dark-muted uppercase tracking-wider flex justify-between">
                         <span>Title</span>
                     </label>
-                    <input type="text" id="title-input" name="title" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
+
+                    <input
+                        type="text"
+                        id="title-input"
+                        name="title"
+                        class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors"
+                    >
                 </div>
-                <!-- Title Input (Auto-filled) -->
+
+                <!-- Embed -->
                 <div class="flex flex-col gap-2">
                     <label for="file_path" class="text-xs font-bold text-dark-muted uppercase tracking-wider flex justify-between">
                         <span>Embed</span>
                     </label>
-                    <input type="text" id="file_path" name="file_path" class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors">
+
+                    <input
+                        type="text"
+                        id="file_path"
+                        name="file_path"
+                        class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors"
+                    >
                 </div>
 
                 <!-- Category Picker -->
@@ -144,10 +162,19 @@
                     </div>
                 </div>
 
-                <!-- Notes Textarea -->
+                <!-- Notes -->
                 <div class="flex flex-col gap-2">
-                    <label for="notes-input" class="text-xs font-bold text-dark-muted uppercase tracking-wider">Notes (Optional)</label>
-                    <textarea id="notes-input" rows="3" placeholder="Add some context or tags..." class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-sm text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors resize-none"></textarea>
+                    <label for="notes-input" class="text-xs font-bold text-dark-muted uppercase tracking-wider">
+                        Notes (Optional)
+                    </label>
+
+                    <textarea
+                        id="notes-input"
+                        name="notes"
+                        rows="3"
+                        placeholder="Add some context or tags..."
+                        class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-sm text-white placeholder-dark-muted focus:outline-none focus:border-brand-crimson transition-colors resize-none"
+                    ></textarea>
                 </div>
             </section>
 

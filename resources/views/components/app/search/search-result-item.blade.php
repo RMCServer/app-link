@@ -6,7 +6,7 @@
     $categoryName = $item->category?->name ?? $item->category_name ?? null;
     $url = isset($item->id) ? route('show', $item->id) : '#';
 
-    $image = $item->image_url ?? null;
+    $image = $item->preview_image ?? null;
     $favicon = $item->favicon_url ?? null;
 
     $createdAt = $item->created_at

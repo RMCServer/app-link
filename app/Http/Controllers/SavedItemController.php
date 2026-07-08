@@ -7,6 +7,7 @@ use App\Models\SavedItem;
 use App\Services\LinkMetadataService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class SavedItemController extends Controller
 {
@@ -65,6 +66,11 @@ class SavedItemController extends Controller
 
         $validated = $this->validateSavedItem($request, $account->id);
 
+        if ($request->hasFile('photo')) {
+            $validated['file_path'] = $request->file('photo')->store('saved-items', 'local');
+            $validated['mime_type'] = $request->file('photo')->getMimeType();
+        }
+
         if (! empty($validated['source_url'])) {
             $metadata = $metadataService->fetch($validated['source_url']);
 
@@ -92,6 +98,20 @@ class SavedItemController extends Controller
         return view('pages.items.show', [
             'item' => $savedItem,
         ]);
+    }
+
+    public function image(SavedItem $savedItem)
+    {
+
+        abort_unless(Storage::disk('local')->exists($savedItem->file_path), 404);
+
+        return Storage::disk('local')->response(
+            $savedItem->file_path,
+            null,
+            [
+                'Content-Type' => $savedItem->mime_type,
+            ]
+        );
     }
 
     public function edit(SavedItem $savedItem)

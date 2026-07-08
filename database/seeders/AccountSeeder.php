@@ -11,7 +11,7 @@ class AccountSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::findOrFail(1);
+        $user = User::findOrFail(2);
 
         $accounts = [
             [

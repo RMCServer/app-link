@@ -10,7 +10,7 @@
     $hasEmbed = filled($embedHtml) && str_contains($embedHtml, '<iframe');
 
     // file_path is iframe, dus NIET als image gebruiken
-    $image = $item->image_url;
+    $image = $item->preview_image ;
 
     $showUrl = route('show', $item);
     $openUrl = $item->type === 'video' && $item->source_url

@@ -4,7 +4,7 @@
     <!-- Top Navigation Bar (VERBATIM FROM PRIOR) -->
     <x-app.navigation.top title="New save" />
 
-    <form method="POST" action="{{ route('saved-items.store') }}" class="space-y-6">
+    <form method="POST" action="{{ route('saved-items.store') }}" class="space-y-6" enctype="multipart/form-data">
         @csrf
         <!-- Main Content Area -->
         <main id="main-content" class="flex-1 flex flex-col relative bg-dotted pb-24">

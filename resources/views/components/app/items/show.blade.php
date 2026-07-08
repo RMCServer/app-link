@@ -15,7 +15,7 @@
     $embedHtml = $item->file_path;
     $hasEmbed = filled($embedHtml) && str_contains($embedHtml, '<iframe');
 
-    $image = $item->image_url;
+    $image = $item->preview_image ;
 
     $isVideo = $item->type === 'video';
     $isImage = $item->type === 'image';
