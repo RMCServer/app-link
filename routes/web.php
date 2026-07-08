@@ -34,8 +34,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/saved-items/{savedItem}', [SavedItemController::class, 'delete'])
         ->name('delete');
 
+
     Route::get('/saved-items/{savedItem}/image', [SavedItemController::class, 'image'])
         ->name('saved-items.image');
+    Route::get('/saved-items/{savedItem}/view', [SavedItemController::class, 'view'])
+        ->name('saved-items.view');
 });
 
 Route::middleware(['auth'])->group(function () {

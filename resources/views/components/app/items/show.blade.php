@@ -64,7 +64,7 @@
                 </div>
             @else
                 <a
-                    href="{{ $url ?? route('show', $item) }}"
+                    href="{{ $url ?? route('saved-items.view', $item) }}"
                     @if($url) target="_blank" rel="noopener noreferrer" @endif
                     class="relative w-full aspect-video bg-black group flex items-center justify-center"
                 >

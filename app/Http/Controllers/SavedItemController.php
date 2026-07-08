@@ -102,7 +102,7 @@ class SavedItemController extends Controller
 
     public function image(SavedItem $savedItem)
     {
-
+        $this->authorizeAccountAccess($savedItem);
         abort_unless(Storage::disk('local')->exists($savedItem->file_path), 404);
 
         return Storage::disk('local')->response(
@@ -112,6 +112,13 @@ class SavedItemController extends Controller
                 'Content-Type' => $savedItem->mime_type,
             ]
         );
+    }
+
+    public function view(SavedItem $savedItem)
+    {
+        $this->authorizeAccountAccess($savedItem);
+
+        return view('pages.items.file', compact('savedItem'));
     }
 
     public function edit(SavedItem $savedItem)
