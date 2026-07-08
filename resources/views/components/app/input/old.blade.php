@@ -66,7 +66,6 @@
                         type="file"
                         id="photo"
                         name="photo"
-                        accept="image/*"
                         class="w-full bg-dark-surface border border-dark-border rounded-[12px] py-3 px-4 text-white file:mr-4 file:rounded-lg file:border-0 file:bg-brand-crimson file:px-4 file:py-2 file:text-white hover:file:opacity-90"
                     >
                 </div>
