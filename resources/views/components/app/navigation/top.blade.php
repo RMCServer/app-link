@@ -11,6 +11,9 @@
 
 
             <!-- Settings Icon -->
+            <a href="{{route('search.index')}}" class="text-dark-text hover:text-brand-crimson transition-colors w-10 h-10 rounded-full flex items-center justify-center bg-dark-surface border border-dark-border">
+                <i class="fa-solid fa-search"></i>
+            </a>
             <a href="{{route('settings.index')}}" class="text-dark-text hover:text-brand-crimson transition-colors w-10 h-10 rounded-full flex items-center justify-center bg-dark-surface border border-dark-border">
                 <i class="fa-solid fa-gear"></i>
             </a>

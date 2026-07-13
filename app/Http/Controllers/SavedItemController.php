@@ -100,6 +100,41 @@ class SavedItemController extends Controller
         ]);
     }
 
+    public function mediaLibrary(Request $request)
+    {
+        $account = $this->activeAccount();
+
+        $type = $request->query('type');
+        $categoryId = $request->query('category');
+
+        $categories = $account->categories()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
+        $items = $account->savedItems()
+            ->with('category')
+            ->where('type', 'image')
+            ->when($categoryId, function ($query) use ($categoryId, $account) {
+                $query->whereHas('category', function ($query) use ($categoryId, $account) {
+                    $query
+                        ->where('id', $categoryId)
+                        ->where('account_id', $account->id);
+                });
+            })
+            ->latest()
+            ->paginate(200)
+            ->withQueryString();
+
+        return view('pages.items.library', compact(
+            'items',
+            'account',
+            'type',
+            'categories',
+            'categoryId'
+        ));
+    }
+
     public function image(SavedItem $savedItem)
     {
         $this->authorizeAccountAccess($savedItem);
@@ -114,11 +149,13 @@ class SavedItemController extends Controller
         );
     }
 
-    public function view(SavedItem $savedItem)
+    public function view(Request $request, SavedItem $savedItem)
     {
         $this->authorizeAccountAccess($savedItem);
 
-        return view('pages.items.file', compact('savedItem'));
+        $backUrl = url()->previous();
+
+        return view('pages.items.file', compact('savedItem', 'backUrl'));
     }
 
     public function edit(SavedItem $savedItem)

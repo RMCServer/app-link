@@ -38,10 +38,10 @@
        @endisset
    </div>
 
-    <a href="{{ route('search.index') }}"
-       class="{{ $navLink }} {{ request()->routeIs('search.*') ? $active : $inactive }}">
-        <i class="fa-solid fa-search text-lg group-hover:-translate-y-1 transition-transform"></i>
-        <span class="text-[10px] font-medium">Search</span>
+    <a href="{{ route('library') }}"
+       class="{{ $navLink }} {{ request()->routeIs('library*') ? $active : $inactive }}">
+        <i class="fa-solid fa-image text-lg group-hover:-translate-y-1 transition-transform"></i>
+        <span class="text-[10px] font-medium">Media</span>
     </a>
 
     <a href="{{ route('settings.index') }}"

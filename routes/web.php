@@ -22,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('saved-items', [SavedItemController::class, 'index'])->name('index');
+    Route::get('library', [SavedItemController::class, 'mediaLibrary'])->name('library');
     Route::get('saved-items/new', [SavedItemController::class, 'create'])->name('create');
     Route::post('saved-items/store', [SavedItemController::class, 'store'])->name('saved-items.store');
     Route::get('/saved-items/{savedItem}', [SavedItemController::class, 'show'])
