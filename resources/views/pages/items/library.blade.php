@@ -207,7 +207,7 @@
                 </a>
             </div>
         </section> --}}
-        <section id="section-2025" class="mb-1">
+        <section id="section-2025" class="mb-[85px]">
 
                         <!-- Month: June 2025 -->
                         <div class="px-4 pt-5 pb-2 flex items-end justify-between">
@@ -226,10 +226,6 @@
 
 
                     </section>
-        <!-- Floating Action Button (Add Item) -->
-        <a href="{{ route('create') }}" id="fab-add" class="fixed bottom-6 right-5 w-14 h-14 bg-brand-crimson hover:bg-brand-crimsonHover text-white rounded-full shadow-[0_4px_20px_rgba(220,20,60,0.4)] flex items-center justify-center text-xl transition-transform hover:scale-105 active:scale-95 z-50 border border-white/20">
-            <i class="fa-solid fa-plus"></i>
-        </a>
     </main>
     <x-app.navigation.bottom />
 

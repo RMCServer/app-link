@@ -63,7 +63,7 @@
 
 <div
         id="viewer"
-        class="fixed inset-0 z-50 hidden items-center justify-center bg-black/95 p-6"
+        class="z-[1000] fixed inset-0 z-50 hidden items-center justify-center bg-black/95 p-6"
     >
 
         <!-- Close -->
