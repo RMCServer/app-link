@@ -220,7 +220,7 @@
                         <!-- Grid Block 2: pure 3-col row -->
                         <div class="photo-grid mt-[2px]">
                             @foreach($items as $item)
-                                <x-app.items.libraryCard :item="$item" />
+                                <x-app.items.libraryCard :item="$item" :back-url="request()->fullUrl()" />
                             @endforeach
                         </div>
 

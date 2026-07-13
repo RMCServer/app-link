@@ -153,7 +153,7 @@ class SavedItemController extends Controller
     {
         $this->authorizeAccountAccess($savedItem);
 
-        $backUrl = url()->previous();
+        $backUrl = $request->query('return');
 
         return view('pages.items.file', compact('savedItem', 'backUrl'));
     }
